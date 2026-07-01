@@ -1,14 +1,15 @@
 "use client";
 
-import { useForm, useFieldArray } from "react-hook-form";
-import { Button } from "../ui/button";
-import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
-import useGetQuery from "@/hooks/useGetMutation";
-import PriceRow from "./PriceRow";
 import { useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
+import { Button } from "../ui/button";
+import PriceRow from "./PriceRow";
+import useGetQuery from "@/hooks/useGetMutation";
+import { formatBackendDate } from "@/lib/formatBackendDate";
 
 const emptyPrice = {
-  country_id: 0,
+  country_id: "",
   price: "",
   discount_type: "no discount",
   discount_amount: "",
@@ -16,14 +17,24 @@ const emptyPrice = {
 };
 
 export default function Pricing({ defaultValues, onNext, onBack }) {
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, resetField } = useForm({
     defaultValues: {
       prices: defaultValues?.prices ?? [emptyPrice],
     },
   });
   useEffect(() => {
     if (defaultValues?.prices?.length) {
-      reset({ prices: defaultValues.prices });
+      reset({
+        prices: defaultValues.prices.map((p) => ({
+          country_id: p.country_id ?? "",
+          price: p.price ?? "",
+          discount_type: p.discount_type ?? "no discount",
+          discount_amount: p.discount_amount ?? "",
+          discount_expire_at: p.discount_expire_at
+            ? p.discount_expire_at.slice(0, 19)
+            : "",
+        })),
+      });
     }
   }, [defaultValues, reset]);
 
@@ -44,9 +55,7 @@ export default function Pricing({ defaultValues, onNext, onBack }) {
   const onSubmit = (data) => {
     const formatted = data.prices.map((p) => ({
       ...p,
-      discount_expire_at: p.discount_expire_at
-        ? `${p.discount_expire_at} 23:59:59`
-        : "",
+      discount_expire_at: formatBackendDate(p.discount_expire_at),
       discount_amount:
         p.discount_type === "no discount" ? 0 : p.discount_amount,
     }));
@@ -54,7 +63,10 @@ export default function Pricing({ defaultValues, onNext, onBack }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-10 px-10">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 pt-10 lg:px-10"
+    >
       {fields.map((field, index) => (
         <PriceRow
           key={field.id}
@@ -62,6 +74,7 @@ export default function Pricing({ defaultValues, onNext, onBack }) {
           index={index}
           remove={remove}
           countryLists={countryLists}
+          resetField={resetField}
         />
       ))}
 

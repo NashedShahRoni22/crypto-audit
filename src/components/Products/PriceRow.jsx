@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { Controller, useWatch } from "react-hook-form";
-import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
+import { Button } from "../ui/button";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import {
   Select,
@@ -17,11 +18,24 @@ import { Input } from "../ui/input";
 
 const discountTypes = ["no discount", "percentage", "fixed"];
 
-export default function PriceRow({ control, index, remove, countryLists }) {
+export default function PriceRow({
+  control,
+  index,
+  remove,
+  countryLists,
+  resetField,
+}) {
   const discountType = useWatch({
     control,
     name: `prices.${index}.discount_type`,
   });
+
+  //  TODO: Reset discount amount and date if useWatch changes
+  // useEffect(() => {
+  //   if (discountType) {
+  //     resetField("name");
+  //   }
+  // }, [discountType, resetField]);
 
   const showDiscount =
     discountType === "percentage" || discountType === "fixed";
@@ -43,16 +57,18 @@ export default function PriceRow({ control, index, remove, countryLists }) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Controller
           name={`prices.${index}.country_id`}
           control={control}
-          rules={{ required: "Country is required" }}
+          rules={{
+            validate: (val) => !!val || "Country is required",
+          }}
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel>Country</FieldLabel>
               <Select
-                value={String(field.value)}
+                value={field.value ? String(field.value) : ""}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="w-full bg-white h-11">
@@ -162,8 +178,8 @@ export default function PriceRow({ control, index, remove, countryLists }) {
                 <FieldLabel>Discount Expires At</FieldLabel>
                 <Input
                   {...field}
-                  type="date"
-                  min={new Date().toISOString().split("T")[0]}
+                  type="datetime-local"
+                  min={new Date().toISOString().slice(0, 16)}
                   className="bg-white h-11"
                 />
                 {fieldState.invalid && (

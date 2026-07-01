@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { TableIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { useState } from "react";
 import { Button } from "../ui/button";
 
 export function TablePicker({ editor }) {

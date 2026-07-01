@@ -1,68 +1,19 @@
 "use client";
-import {
-  Timeline,
-  TimelineHeader,
-  TimelineIndicator,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineTitle,
-} from "@/components/reui/timeline";
-import { Button } from "@/components/ui/button";
-import useGetQuery from "@/hooks/useGetMutation";
-import { cn } from "@/lib/utils";
-import { useMutation } from "@tanstack/react-query";
-import {
-  BoxIcon,
-  Building2Icon,
-  CheckIcon,
-  GlobeIcon,
-  LogOutIcon,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+
+import React, { useState } from "react";
 import toast from "react-hot-toast";
-
-const menuItems = [
-  {
-    id: 1,
-    href: "/dashboard/products",
-    icon: BoxIcon,
-    label: "Products",
-  },
-  {
-    id: 2,
-    href: "/dashboard/countries",
-    icon: GlobeIcon,
-    label: "Countries",
-  },
-  {
-    id: 3,
-    href: "/dashboard/bank",
-    icon: Building2Icon,
-    label: "Bank Information",
-  },
-
-  {
-    id: 4,
-    href: "/dashboard/orders",
-    icon: ShoppingCart,
-    label: "Manage Orders",
-  },
-  {
-    id: 6,
-    href: "/dashboard/users",
-    icon: Users,
-    label: "Manage Users",
-  },
-];
+import Image from "next/image";
+import { LogOutIcon, Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { NavLinks } from "./NavLinks";
 
 export default function Sidebar() {
   const token = localStorage.getItem("token");
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const [showMenu, setShowMenu] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -94,65 +45,74 @@ export default function Sidebar() {
   });
 
   return (
-    <div className="flex flex-col items-center py-10 px-5 bg-white text-[#1f1f1f] min-h-screen sticky top-0 font-inter">
-      <div className=" pb-10 flex items-center gap-3">
-        <Image src="/logo.png" alt="logo" width={50} height={50} />
-        <h1 className="font-inter font-bold text-2xl">Crypto Audit</h1>
-      </div>
-      <div className="flex flex-col py-30 px-5 text-[#1f1f1f] min-h-screen fixed top-10 font-inter">
-        <div className="w-full max-w-xs">
-          <Timeline defaultValue={menuItems.length}>
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-
-              return (
-                <TimelineItem
-                  key={item.id}
-                  step={item.id}
-                  className="group-data-[orientation=vertical]/timeline:ms-10 min-h-24"
-                >
-                  <TimelineHeader>
-                    <TimelineSeparator className="bg-input! group-data-[orientation=vertical]/timeline:-left-7 group-data-[orientation=vertical]/timeline:h-[calc(100%-1.5rem-0.25rem)] group-data-[orientation=vertical]/timeline:translate-y-6.5" />
-
-                    <TimelineIndicator
-                      className={cn(
-                        "flex size-6 items-center justify-center border-2 group-data-[orientation=vertical]/timeline:-left-7",
-                        isActive
-                          ? "bg-primary border-primary text-white"
-                          : "bg-background border-input text-transparent",
-                      )}
-                    >
-                      {isActive && <CheckIcon className="size-3.5" />}
-                    </TimelineIndicator>
-
-                    <TimelineTitle
-                      className={cn(
-                        "text-sm flex items-center gap-2",
-                        isActive
-                          ? "font-semibold text-primary"
-                          : "text-muted-foreground",
-                      )}
-                    >
-                      <Icon size={16} />
-                      <Link href={item.href}>{item.label}</Link>
-                    </TimelineTitle>
-                  </TimelineHeader>
-                </TimelineItem>
-              );
-            })}
-          </Timeline>
+    <>
+      <div className="hidden lg:flex flex-col items-start py-10 px-5 bg-white text-[#1f1f1f] min-h-screen sticky top-0 font-inter gap-2 border-r">
+        <div className="pb-8 flex items-center gap-3">
+          <Image src="/logo.png" alt="logo" width={40} height={40} />
+          <h1 className="font-bold text-xl">Crypto Audit</h1>
         </div>
+        <NavLinks pathname={pathname} />
+        <Button
+          variant="outline"
+          onClick={() => mutate()}
+          disabled={isPending}
+          className="bg-red-500 hover:bg-red-600 mt-auto w-full cursor-pointer text-white hover:text-white"
+        >
+          Logout <LogOutIcon className="pointer-events-none" size={16} />
+        </Button>
       </div>
-      <Button
-        variant="outline"
-        onClick={() => mutate()}
-        disabled={isPending}
-        className="bg-red-500 hover:bg-red-600 mt-auto w-full cursor-pointer text-white hover:text-white z-10"
+
+      <div className="lg:hidden flex items-center justify-between p-4 border-b bg-white sticky top-0 z-40">
+        <div className="flex items-center gap-2">
+          <Image src="/logo.png" alt="logo" width={32} height={32} />
+          <h1 className="font-bold text-lg">Crypto Audit</h1>
+        </div>
+        <Button
+          onClick={() => setShowMenu((prev) => !prev)}
+          variant="outline"
+          size="icon"
+          className="border-none shadow-none"
+        >
+          {showMenu ? <X size={20} /> : <Menu size={20} />}
+        </Button>
+      </div>
+
+      {showMenu && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          onClick={() => setShowMenu(false)}
+        />
+      )}
+
+      <div
+        className={`fixed top-0 left-0 h-screen w-64 bg-white z-50 flex flex-col gap-2 p-5 pt-6 transition-transform duration-300 lg:hidden ${
+          showMenu ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
-        Logout <LogOutIcon className="pointer-events-none" />
-      </Button>
-    </div>
+        <div className="flex items-center justify-between pb-6">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="logo" width={32} height={32} />
+            <h1 className="font-bold text-lg">Crypto Audit</h1>
+          </div>
+          <Button
+            onClick={() => setShowMenu(false)}
+            variant="outline"
+            size="icon"
+            className="border-none shadow-none"
+          >
+            <X size={20} />
+          </Button>
+        </div>
+        <NavLinks />
+        <Button
+          variant="outline"
+          onClick={() => mutate()}
+          disabled={isPending}
+          className="bg-red-500 hover:bg-red-600 mt-auto w-full cursor-pointer text-white hover:text-white"
+        >
+          Logout <LogOutIcon className="pointer-events-none" size={16} />
+        </Button>
+      </div>
+    </>
   );
 }

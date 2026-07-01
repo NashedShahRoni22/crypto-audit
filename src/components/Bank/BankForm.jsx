@@ -1,5 +1,8 @@
 "use client";
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import {
@@ -13,12 +16,8 @@ import {
 } from "../ui/select";
 import { Button } from "../ui/button";
 import usePostMutation from "@/hooks/usePostMutation";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
 import useGetQuery from "@/hooks/useGetMutation";
-import { useQueryClient } from "@tanstack/react-query";
 import usePatchMutation from "@/hooks/usePatchMutation";
-
 export default function BankForm({ id, onClose }) {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -32,7 +31,7 @@ export default function BankForm({ id, onClose }) {
   const queryClient = useQueryClient();
   const transferTypes = ["Bank", "Mobile Banking"];
 
-  const { data, isLoading } = useGetQuery({
+  const { data } = useGetQuery({
     endpoint: `/bank/show/${id}`,
     enabled: !!id,
     isTokenRequired: true,
@@ -70,7 +69,6 @@ export default function BankForm({ id, onClose }) {
           }
         },
         onError: (error) => {
-          console.log(error.message);
           toast.error(error.message);
         },
       });
@@ -86,7 +84,6 @@ export default function BankForm({ id, onClose }) {
           }
         },
         onError: (error) => {
-          console.log(error.message);
           toast.error(error.message);
         },
       });

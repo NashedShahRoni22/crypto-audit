@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
@@ -8,9 +9,7 @@ import { TextStyle, FontSize } from "@tiptap/extension-text-style";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import { TableKit } from "@tiptap/extension-table";
 import Image from "@tiptap/extension-image";
-
 import MenuBar from "./MenuBar";
-import { useEffect } from "react";
 
 export default function Tiptap({ content, onChange }) {
   const editor = useEditor({

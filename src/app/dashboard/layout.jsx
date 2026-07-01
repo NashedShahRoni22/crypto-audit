@@ -1,12 +1,11 @@
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Container from "@/components/shared/Container/Container";
 import Sidebar from "@/components/shared/Sidebar/Sidebar";
-import React from "react";
 
 export default function layout({ children }) {
   return (
     <PrivateRoute>
-      <div className="grid grid-cols-12">
+      <div className="lg:grid grid-cols-12">
         <div className="col-span-2">
           <Sidebar />
         </div>

@@ -1,13 +1,13 @@
 "use client";
+import { useEffect } from "react";
+import { ArrowRight } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import Tiptap from "../Tiptap/Tiptap";
-import { ArrowRight } from "lucide-react";
-import { useEffect } from "react";
 
 export default function BasicInfo({ defaultValues, onNext, onBack }) {
   const { handleSubmit, reset, control } = useForm({
@@ -33,7 +33,7 @@ export default function BasicInfo({ defaultValues, onNext, onBack }) {
   return (
     <form
       onSubmit={handleSubmit(onNext)}
-      className="space-y-4 pt-10 bg-white px-10 rounded "
+      className="space-y-4 pt-10 bg-white px-4 lg:px-10 py-6 rounded "
     >
       <Controller
         name="name"

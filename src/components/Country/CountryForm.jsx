@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import usePostMutation from "@/hooks/usePostMutation";
-import toast from "react-hot-toast";
 import useGetQuery from "@/hooks/useGetMutation";
 import usePutMutation from "@/hooks/usePutMutation";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function CountryForm({ id, onClose }) {
   const isEditMode = !!id;
@@ -55,12 +55,11 @@ export default function CountryForm({ id, onClose }) {
           if (data.success) {
             toast.success(data.message);
             queryClient.invalidateQueries({ queryKey: ["countries"] });
-
-            // onClose();
+            onClose();
           }
         },
         onError: (error) => {
-          console.log(error);
+          toast.error(error.message);
         },
       });
     } else {
@@ -68,11 +67,12 @@ export default function CountryForm({ id, onClose }) {
         onSuccess: (data) => {
           if (data.success) {
             toast.success(data.message);
+            onClose();
             queryClient.invalidateQueries({ queryKey: ["countries"] });
           }
         },
         onError: (error) => {
-          console.log(error);
+          toast.error(error.message);
         },
       });
     }

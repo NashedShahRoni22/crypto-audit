@@ -1,11 +1,11 @@
-import BankForm from "@/components/Bank/BankForm";
-import CountryForm from "@/components/Country/CountryForm";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import BankForm from "@/components/Bank/BankForm";
+import CountryForm from "@/components/Country/CountryForm";
 
 export default function DialogModal({ isOpen, id, onClose, tab }) {
   const isEditMode = !!id;

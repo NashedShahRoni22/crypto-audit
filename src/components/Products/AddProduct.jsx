@@ -47,17 +47,16 @@ export default function AddProduct({ productDetails, isLoading }) {
 
   return (
     <>
-      <div className="flex gap-6">
+      <div className="flex lg:flex-row flex-col bg-white rounded-md lg:pl-8">
         <Stepper steps={STEPS} activeStep={activeStep} />
 
-        <div className="flex-1">
+        <div className="flex-1 pb-20">
           <ActiveComponent
             defaultValues={productData}
             onNext={handleNext}
             onBack={activeStep > 0 ? handleBack : null}
             isLastStep={activeStep === STEPS.length - 1}
             allData={productData}
-            isEditMode={isEditMode}
             productId={productDetails?.id}
           />
         </div>
