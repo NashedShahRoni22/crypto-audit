@@ -50,7 +50,7 @@ export default function AddProduct({ productDetails, isLoading }) {
       <div className="flex lg:flex-row flex-col bg-white rounded-md lg:pl-8">
         <Stepper steps={STEPS} activeStep={activeStep} />
 
-        <div className="flex-1 pb-20">
+        <div className="flex-1">
           <ActiveComponent
             defaultValues={productData}
             onNext={handleNext}
