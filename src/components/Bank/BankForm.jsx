@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import usePostMutation from "@/hooks/usePostMutation";
 import useGetQuery from "@/hooks/useGetMutation";
 import usePatchMutation from "@/hooks/usePatchMutation";
+import Loader from "../shared/Loader/Loader";
 export default function BankForm({ id, onClose }) {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -92,10 +93,18 @@ export default function BankForm({ id, onClose }) {
 
   let btnText = "";
   if (isPending) {
-    btnText = "Adding Bank...";
+    btnText = (
+      <>
+        Adding Bank <Loader />
+      </>
+    );
   }
   if (isUpdatePending) {
-    btnText = "Updating Bank";
+    btnText = (
+      <>
+        Updating Bank <Loader />
+      </>
+    );
   }
   if (!isPending && !id) {
     btnText = "Add Bank";

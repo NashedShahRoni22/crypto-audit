@@ -23,19 +23,19 @@ export default function PriceRow({
   index,
   remove,
   countryLists,
-  resetField,
+  setValue,
 }) {
   const discountType = useWatch({
     control,
     name: `prices.${index}.discount_type`,
   });
 
-  //  TODO: Reset discount amount and date if useWatch changes
-  // useEffect(() => {
-  //   if (discountType) {
-  //     resetField("name");
-  //   }
-  // }, [discountType, resetField]);
+  useEffect(() => {
+    if (discountType) {
+      setValue(`prices.${index}.discount_amount`, "");
+      setValue(`prices.${index}.discount_expire_at`, "");
+    }
+  }, [discountType, setValue, index]);
 
   const showDiscount =
     discountType === "percentage" || discountType === "fixed";

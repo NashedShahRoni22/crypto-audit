@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ProductsTableSkeleton } from "../skeleton/ProductsTableSkeleton";
 import useGetQuery from "@/hooks/useGetMutation";
+import EmptyState from "../EmptyState/EmptyState";
 
 export default function Products() {
   const [inputText, setInputText] = useState("");
@@ -53,7 +54,7 @@ export default function Products() {
       </form>
       {isLoading ? (
         <ProductsTableSkeleton rows={5} />
-      ) : (
+      ) : filteredPackages?.length > 0 ? (
         <Table className="shadow bg-white px-4 ">
           <TableHeader>
             <TableRow className="h-12">
@@ -72,11 +73,15 @@ export default function Products() {
                 <TableCell>{pkg.updated_at}</TableCell>
                 {pkg.status === "active" ? (
                   <TableCell>
-                    <Badge className="bg-green-600">{pkg.status}</Badge>
+                    <Badge className="bg-green-50 text-green-700">
+                      {pkg.status}
+                    </Badge>
                   </TableCell>
                 ) : (
                   <TableCell>
-                    <Badge className="bg-red-400">{pkg.status}</Badge>
+                    <Badge className="bg-yellow-50 text-yellow-700">
+                      {pkg.status}
+                    </Badge>
                   </TableCell>
                 )}
 
@@ -89,6 +94,12 @@ export default function Products() {
             ))}
           </TableBody>
         </Table>
+      ) : (
+        <EmptyState
+          text={`No product found for ${inputText}. Try another one.`}
+          btnTxt="Add Product"
+          href="/dashboard/products/add"
+        />
       )}
     </div>
   );

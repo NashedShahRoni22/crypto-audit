@@ -9,7 +9,6 @@ import { CountryCardSkeleton } from "../skeleton/CountryCardSkeleton";
 import useGetQuery from "@/hooks/useGetMutation";
 import useDeleteMutation from "@/hooks/useDeleteMutation";
 import { useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
 import EmptyState from "../EmptyState/EmptyState";
 
 export default function Country() {
@@ -62,7 +61,10 @@ export default function Country() {
         )}
         {countries.length > 0 && !isLoading && (
           <div className="flex items-center justify-end py-6">
-            <Button onClick={handleAddClick} className="bg-brand">
+            <Button
+              onClick={handleAddClick}
+              className="bg-brand/90 hover:bg-brand"
+            >
               <Plus /> Add Country
             </Button>
           </div>

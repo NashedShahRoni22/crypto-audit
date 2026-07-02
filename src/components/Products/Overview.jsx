@@ -8,6 +8,7 @@ import usePutMutation from "@/hooks/usePutMutation";
 import { Separator } from "../ui/separator";
 import { formatDisplayDate } from "@/lib/formatDisplayDate";
 import { formatBackendDate } from "@/lib/formatBackendDate";
+import Loader from "../shared/Loader/Loader";
 
 export default function Overview({ allData, onBack, productId }) {
   const isEditMode = !!productId;
@@ -71,13 +72,21 @@ export default function Overview({ allData, onBack, productId }) {
     btnText = "Update Product";
   }
   if (isEditMode && updatePending) {
-    btnText = " Product Updating...";
+    btnText = (
+      <>
+        Product Updating <Loader />
+      </>
+    );
   }
   if (!isEditMode && !isPending) {
     btnText = "Publish Product";
   }
   if (!isEditMode && isPending) {
-    btnText = "Product Publishing...";
+    btnText = (
+      <>
+        Product Publishing <Loader />
+      </>
+    );
   }
 
   const showDiscount = (type) =>

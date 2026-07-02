@@ -142,7 +142,7 @@ export default function ProductTag({ defaultValues, onNext, onBack }) {
                 {section.items.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div className="flex flex-col gap-3 w-full">
-                      <Label>Features</Label>
+                      {idx === 0 && <Label>Features</Label>}
 
                       <Input
                         value={item}

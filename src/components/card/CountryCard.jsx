@@ -1,4 +1,4 @@
-import { PencilIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, Trash2Icon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,8 +12,8 @@ import {
 } from "../ui/alert-dialog";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { Spinner } from "../ui/spinner";
 import { Separator } from "../ui/separator";
+import Loader from "../shared/Loader/Loader";
 
 export default function CountryCard({
   countries,
@@ -41,9 +41,9 @@ export default function CountryCard({
               <AlertDialogTrigger asChild>
                 <Button
                   variant="outline"
-                  className="border-none shadow-none bg-none cursor-pointer pr-6"
+                  className="shadow-none bg-transparent border-none hover:bg-transparent cursor-pointer pr-6"
                 >
-                  <TrashIcon className="size-4" />
+                  <Trash2Icon className="size-4 text-red-600" />
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -60,11 +60,11 @@ export default function CountryCard({
                       handleDelete(country?.id);
                     }}
                     disabled={deletePending}
-                    className="bg-red-600"
+                    className="bg-red-600 hover:bg-red-600"
                   >
                     {deletePending ? (
                       <>
-                        Deleting... <Spinner />
+                        Deleting... <Loader />
                       </>
                     ) : (
                       "Delete"

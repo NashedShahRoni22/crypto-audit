@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import usePostMutation from "@/hooks/usePostMutation";
 import useGetQuery from "@/hooks/useGetMutation";
 import usePutMutation from "@/hooks/usePutMutation";
+import Loader from "../shared/Loader/Loader";
 
 export default function CountryForm({ id, onClose }) {
   const isEditMode = !!id;
@@ -23,7 +24,7 @@ export default function CountryForm({ id, onClose }) {
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useGetQuery({
+  const { data } = useGetQuery({
     endpoint: `/countries/${id}`,
     enabled: !!id,
     isTokenRequired: true,
@@ -80,10 +81,18 @@ export default function CountryForm({ id, onClose }) {
 
   let btnText = "";
   if (isPending) {
-    btnText = "Adding Country...";
+    btnText = (
+      <>
+        Adding Country <Loader />
+      </>
+    );
   }
   if (isUpdatePending) {
-    btnText = "Updating Country";
+    btnText = (
+      <>
+        Updating Country <Loader />
+      </>
+    );
   }
   if (!isPending && !id) {
     btnText = "Add Country";

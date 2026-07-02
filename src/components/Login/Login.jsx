@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import usePostMutation from "@/hooks/usePostMutation";
-import { Spinner } from "../ui/spinner";
+import Loader from "../shared/Loader/Loader";
 const badges = [
   "Products",
   "Categories",
@@ -159,7 +159,7 @@ export default function Login() {
               {isPending ? (
                 <>
                   Logging
-                  <Spinner />
+                  <Loader />
                 </>
               ) : (
                 "Login"

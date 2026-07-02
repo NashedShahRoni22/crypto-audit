@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loader from "../shared/Loader/Loader";
 
 export default function PrivateRoute({ children }) {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function PrivateRoute({ children }) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Loading...</p>
+        <Loader />
       </div>
     );
   }

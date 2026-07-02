@@ -17,7 +17,7 @@ const emptyPrice = {
 };
 
 export default function Pricing({ defaultValues, onNext, onBack }) {
-  const { handleSubmit, control, reset, resetField } = useForm({
+  const { handleSubmit, control, reset, setValue } = useForm({
     defaultValues: {
       prices: defaultValues?.prices ?? [emptyPrice],
     },
@@ -74,7 +74,7 @@ export default function Pricing({ defaultValues, onNext, onBack }) {
           index={index}
           remove={remove}
           countryLists={countryLists}
-          resetField={resetField}
+          setValue={setValue}
         />
       ))}
 
