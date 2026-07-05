@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function BankCardSkeleton({ count = 8 }) {
   return (
-    <div className="grid grid-cols-4 gap-4 py-6">
+    <>
       {Array.from({ length: count }).map((_, i) => (
         <Card size="sm" className="mx-auto w-full" key={i}>
           <div className="flex justify-between">
@@ -33,6 +33,6 @@ export function BankCardSkeleton({ count = 8 }) {
           </div>
         </Card>
       ))}
-    </div>
+    </>
   );
 }

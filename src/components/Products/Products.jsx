@@ -39,7 +39,7 @@ export default function Products() {
   if (packages.length === 0) {
     content = (
       <EmptyState
-        text={`No product added yet Add product for you customer.`}
+        text="No product added yet Add product for you customer."
         btnTxt="Add Product"
         href="/dashboard/products/add"
       />

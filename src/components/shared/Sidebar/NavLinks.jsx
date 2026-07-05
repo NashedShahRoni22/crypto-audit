@@ -41,7 +41,7 @@ const menuItems = [
   },
 ];
 
-export const NavLinks = ({ pathname }) => (
+export const NavLinks = ({ pathname, setShowMenu }) => (
   <>
     {menuItems.map((item) => {
       const isActive = pathname?.startsWith(item.href);

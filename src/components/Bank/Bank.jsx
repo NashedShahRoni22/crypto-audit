@@ -89,7 +89,9 @@ export default function Bank() {
       )}
 
       {isLoading ? (
-        <BankCardSkeleton />
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 py-6">
+          <BankCardSkeleton />
+        </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 py-6">
           <BankCard

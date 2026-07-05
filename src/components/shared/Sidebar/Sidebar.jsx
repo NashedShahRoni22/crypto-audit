@@ -51,7 +51,7 @@ export default function Sidebar() {
           <Image src="/logo.png" alt="logo" width={40} height={40} />
           <h1 className="font-bold text-xl">Crypto Audit</h1>
         </div>
-        <NavLinks pathname={pathname} />
+        <NavLinks pathname={pathname} setShowMenu={setShowMenu} />
         <Button
           variant="outline"
           onClick={() => mutate()}
@@ -103,7 +103,7 @@ export default function Sidebar() {
             <X size={20} />
           </Button>
         </div>
-        <NavLinks />
+        <NavLinks pathname={pathname} setShowMenu={setShowMenu} />
         <Button
           variant="outline"
           onClick={() => mutate()}

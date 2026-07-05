@@ -6,6 +6,7 @@ import Overview from "./Overview";
 import Pricing from "./Pricing";
 import ProductTag from "./ProductTag";
 import BasicInfo from "./BasicInfo";
+import Loader from "../shared/Loader/Loader";
 
 const STEPS = [
   { id: 1, label: "Basic Info", component: BasicInfo },
@@ -21,7 +22,9 @@ export default function AddProduct({ productDetails, isLoading }) {
   const [productData, setProductData] = useState({});
 
   useEffect(() => {
-    setProductData(productDetails);
+    if (productDetails) {
+      setProductData(productDetails);
+    }
   }, [productDetails]);
 
   const updateProductData = (newData) => {
@@ -39,7 +42,9 @@ export default function AddProduct({ productDetails, isLoading }) {
 
   if (isEditMode && isLoading) {
     return (
-      <div className="p-10 text-center">Loading from add product data...</div>
+      <div className="p-10 text-center">
+        <Loader />
+      </div>
     );
   }
 

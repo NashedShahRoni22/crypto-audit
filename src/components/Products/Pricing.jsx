@@ -65,7 +65,7 @@ export default function Pricing({ defaultValues, onNext, onBack }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 pt-10 lg:px-10"
+      className="space-y-4 pt-10 px-4 lg:px-10"
     >
       {fields.map((field, index) => (
         <PriceRow

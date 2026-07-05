@@ -37,8 +37,6 @@ export default function BasicInfo({ defaultValues, onNext, onBack }) {
     return text.length === 0;
   };
 
-  console.log(defaultValues?.description);
-
   return (
     <form
       onSubmit={handleSubmit(onNext)}

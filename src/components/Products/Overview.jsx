@@ -9,10 +9,12 @@ import { Separator } from "../ui/separator";
 import { formatDisplayDate } from "@/lib/formatDisplayDate";
 import { formatBackendDate } from "@/lib/formatBackendDate";
 import Loader from "../shared/Loader/Loader";
+import useGetQuery from "@/hooks/useGetMutation";
 
 export default function Overview({ allData, onBack, productId }) {
   const isEditMode = !!productId;
   const router = useRouter();
+
   const payload = {
     name: allData.name,
     short_description: allData.short_description,
@@ -94,8 +96,8 @@ export default function Overview({ allData, onBack, productId }) {
 
   return (
     <div className="py-20">
-      <div className=" flex flex-col justify-end gap-3">
-        <div className="border rounded-xl p-5 bg-white space-y-4">
+      <div className=" flex flex-col justify-end gap-3 px-4">
+        <div className="border rounded-xl p-5 bg-white space-y-4 ">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest flex items-center gap-2">
             Basic info
           </p>
