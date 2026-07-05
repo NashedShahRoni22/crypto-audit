@@ -36,7 +36,7 @@ export default function Products() {
   if (isLoading) {
     content = <ProductsTableSkeleton rows={5} />;
   }
-  if (packages.length === 0) {
+  if (!isLoading && packages.length === 0) {
     content = (
       <EmptyState
         text="No product added yet Add product for you customer."

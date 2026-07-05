@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { ArrowRight, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import ProductTagSection from "./ProductTagSection.jsx";
+import { useEffect } from "react";
 
 const emptySection = {
   title: "",
@@ -10,7 +11,7 @@ const emptySection = {
 };
 
 export default function ProductTag({ defaultValues, onNext, onBack }) {
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       item_sections: defaultValues?.item_sections?.length
@@ -23,6 +24,21 @@ export default function ProductTag({ defaultValues, onNext, onBack }) {
         : [emptySection],
     },
   });
+
+  useEffect(() => {
+    const sections = defaultValues?.item_sections ?? defaultValues?.items;
+
+    if (sections?.length) {
+      reset({
+        item_sections: sections.map((s) => ({
+          title: s.title ?? s.name ?? "",
+          items: s.items?.length
+            ? s.items.map((i) => ({ value: i }))
+            : [{ value: "" }],
+        })),
+      });
+    }
+  }, [defaultValues, reset]);
 
   const {
     fields: sectionFields,
