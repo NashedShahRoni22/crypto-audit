@@ -9,7 +9,6 @@ import { Separator } from "../ui/separator";
 import { formatDisplayDate } from "@/lib/formatDisplayDate";
 import { formatBackendDate } from "@/lib/formatBackendDate";
 import Loader from "../shared/Loader/Loader";
-import useGetQuery from "@/hooks/useGetMutation";
 
 export default function Overview({ allData, onBack, productId }) {
   const isEditMode = !!productId;
