@@ -1,3 +1,5 @@
-export default function Users() {
-  return <div>Users</div>;
+import Users from "@/components/Users/Users";
+
+export default function UsersPage() {
+  return <Users />;
 }

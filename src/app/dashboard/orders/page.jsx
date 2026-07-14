@@ -1,3 +1,5 @@
-export default function Orders() {
-  return <div>Orders</div>;
+import Orders from "@/components/Orders/Orders";
+
+export default function OrdersPage() {
+  return <Orders />;
 }
